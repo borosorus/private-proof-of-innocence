@@ -1,0 +1,20 @@
+# Use Node.js official image
+FROM node:16
+
+# Set the working directory inside the container
+WORKDIR /usr/src/app
+
+# Copy package.json and install dependencies
+COPY package*.json ./
+
+# Copy the rest of the application files
+COPY . .
+
+RUN yarn
+RUN npm install -g pm2
+# Expose the port the app will run on
+EXPOSE 8040
+
+# Command to run the application
+CMD ["npx","pm2","start", "pm2-aggregator.config.js"]
+

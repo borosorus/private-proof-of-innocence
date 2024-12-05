@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mongodb-prod:
+    image: mongo:latest   # Official MongoDB image from Docker Hub
+    container_name: mongodb
+    ports:
+      - "27017:27017"      # Expose the default MongoDB port
+    volumes:
+      - mongodb_data:/data/db  # Persist MongoDB data on the host machine
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root  # MongoDB root user
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword  # MongoDB root password
+    networks:
+      - app-network
+    # Node.js App Service
+  app:
+    build:
+      context: .
+    container_name: poi_instance
+    ports:
+      - "8040:8040"
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017  # MongoDB connection URL
+    depends_on:
+      - mongodb-prod
+    networks:
+      - app-network
+
+mongodb-test:
+    image: mongo:latest   # Official MongoDB image from Docker Hub
+    container_name: mongodb_test
+    ports:
+      - "27017:27017"      # Expose the default MongoDB port
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:  # Define the volume for persistent MongoDB storage
+
