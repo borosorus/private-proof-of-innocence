@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const MONGOOSE_DB_URL = 'mongodb://localhost:27017/test';
+export const MONGOOSE_DB_URL = 'mongodb://localhost:27017';
 
 let mongooseDB: typeof mongoose;
 

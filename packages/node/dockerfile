@@ -13,7 +13,7 @@ COPY . .
 RUN yarn
 RUN npm install -g pm2
 # Expose the port the app will run on
-EXPOSE 8040
+EXPOSE 8000
 
 # Command to run the application
 CMD ["npx","pm2","start", "pm2-aggregator.config.js"]
